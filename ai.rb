@@ -6,7 +6,6 @@ class AI
 	end
 	def move(board)
 		# Take a move on the board
-		# moves = board.validMoves
 		score, move = minimax(board, 2,@player)
 		board.move(move[0],move[1],@player)
 	end
@@ -38,7 +37,6 @@ class AI
 				board.unmove(x,y)
 			end
 		end
-		# board2 = Marshal::load(Marshal::dump(board))
 
 		return [bestScore,bestMove]
 	end
@@ -46,9 +44,7 @@ class AI
 		board.sets.map{|set| setHeuristic(set)}.reduce(:+)
 	end
 	def setHeuristic(set)
-		# myCount = set.count(@player)
 		myCount = Board.countInRow(set,@player)
-		# oppCount = set.count{|e| e != @player && e != nil}
 		oppCount = Board.countInRow(set,@opponent)
 
 		if myCount == 3
@@ -66,15 +62,5 @@ class AI
 		else
 			0
 		end
-
-		# 1. If we have two, 100
-		# 2. If opponent has two, -100
-		# 3. If we have oportunity to get two in row, 10
-		# 4. Block opponent from getting two in a row, 10
-		# 5. If center is open, take it
-		# 6. If corner is open, take it
-		# 7. Take side
 	end
-
-
 end

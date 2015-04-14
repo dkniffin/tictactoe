@@ -21,8 +21,6 @@ class Board
 		# TODO: Change this to dynamic generation
 		[[[0,0],[1,1],[2,2]],
 		 [[0,2],[1,1],[2,0]]]
-		#0,0 1,1 2,2
-		#0,2 1,1 2,0
 	end
 	def cellCoords
 		rows.reduce(:+)
