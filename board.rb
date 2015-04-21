@@ -51,12 +51,18 @@ class Board
 		cols.map{|c| c.map{|x,y| (@data[x][y] == nil) ? '_': @data[x][y]}.join(' ')}.join("\n")
 	end
 	def end?
+		# There's a winner or no moves left
+		! winner.nil? || cells.none? {|cell| cell.nil?}
+	end
+	def winner
 		# Any sets have all the same, non-nil, elements
-		sets.any? do |set|
-			Board.countInRow(set,'X') == 3 ||
-			Board.countInRow(set,'O') == 3
-		end || cells.none? {|cell| cell.nil?}
-
+		if sets.any?{|s| Board.countInRow(s,'X') == 3 }
+			'X'
+		elsif sets.any?{|s| Board.countInRow(s,'O') == 3 }
+			'O'
+		else
+			nil
+		end
 	end
 	class << self
 		def countInRow(set,player)

@@ -24,7 +24,9 @@ prompt = "Your move: "
 loop do
 	# Check if the game is over
 	if b.end?
-		puts "Game over!"
+		winner = b.winner
+		result_msg = winner.nil? ? 'Tie.' : "#{winner} wins!"
+		puts "Game over! #{result_msg}"
 		exit
 	end
 	$stdout.print(prompt)
