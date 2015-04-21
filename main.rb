@@ -34,7 +34,9 @@ loop do
 
 	if b.valid?(x,y)
 		b.move(x,y,playerToken)
-		ai.move(b)
+		unless b.end?
+			ai.move(b)
+		end
 	else
 		puts "Invalid move! Try again."
 	end
