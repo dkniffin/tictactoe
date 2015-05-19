@@ -18,8 +18,12 @@ if aiToken == 'X'
 	ai.move(b)
 end
 
-# Game REPL
+puts "Game input grid:"
+puts Board.inputGrid
+puts
+puts "Current Board:"
 puts b
+# Game REPL
 prompt = "Your move: "
 loop do
 	# Check if the game is over
@@ -32,7 +36,18 @@ loop do
 	$stdout.print(prompt)
 	input = gets.chomp # Get user input
 
-	x,y = input.split(',').map{|e| e.to_i} # split into x & y
+	coords = [[0,0],[1,0],[2,0],
+			  [0,1],[1,1],[2,1],
+			  [0,2],[1,2],[2,2]]
+	pos = input.to_i
+	if ! pos.between?(1,9)
+		puts "Invalid input. Input should be a number 1-9."
+		puts "Move grid:"
+		puts Board.positionsString
+		next
+	end
+	x,y = coords[pos-1]
+	# x,y = input.split(',').map{|e| e.to_i} # split into x & y
 
 	if b.valid?(x,y)
 		b.move(x,y,playerToken)

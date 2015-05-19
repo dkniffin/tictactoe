@@ -82,5 +82,10 @@ class Board
 			end
 			bestCount
 		end
+		def inputGrid
+			"1 2 3\n" +
+			"4 5 6\n" +
+			"7 8 9"
+		end
 	end
 end
