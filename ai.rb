@@ -57,6 +57,8 @@ class AI
 			-10
 		elsif set[1] == @player # Owning the center space
 			5
+		elsif set[0] == @player || set[2] == @player # Owning a corner space
+			3
 		elsif myCount == 1 # Owning another space
 			1
 		elsif oppCount == 1
