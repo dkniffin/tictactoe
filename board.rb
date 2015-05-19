@@ -4,6 +4,7 @@ class Board
 		@w = w
 		@h = h
 		@data = data || ys.map{|i| xs.map{|j| nil}}
+
 	end
 	def xs
 		(0..(@w-1))
@@ -81,6 +82,9 @@ class Board
 				end
 			end
 			bestCount
+		end
+		def posCoords
+			[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1],[0,2],[1,2],[2,2]]
 		end
 		def inputGrid
 			"1 2 3\n" +

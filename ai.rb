@@ -1,4 +1,5 @@
 class AI
+	attr_reader :player,:opponent
 	def initialize(player,opponent)
 		# Player = number of player
 		@player = player
@@ -8,6 +9,7 @@ class AI
 		# Take a move on the board
 		score, move = minimax(board, 2,@player)
 		board.move(move[0],move[1],@player)
+		return move
 	end
 	def minimax(board, depth, player)
 		moves = board.validMoves
@@ -41,9 +43,15 @@ class AI
 		return [bestScore,bestMove]
 	end
 	def heuristic(board)
-		board.sets.map{|set| setHeuristic(set)}.reduce(:+)
+		board.sets.each_with_index.map do |set,i|
+			midcenter = [1,4,6,7].include?(i)
+			setHeuristic(set,midcenter)
+		end.reduce(:+)
 	end
-	def setHeuristic(set)
+	def setHeuristic(set,midcenter=false)
+		# midcenter says whether the middle of this set is the center
+
+
 		myCount = Board.countInRow(set,@player)
 		oppCount = Board.countInRow(set,@opponent)
 
@@ -55,7 +63,7 @@ class AI
 			10
 		elsif oppCount == 2
 			-10
-		elsif set[1] == @player # Owning the center space
+		elsif set[1] == @player && midcenter
 			5
 		elsif set[0] == @player || set[2] == @player # Owning a corner space
 			3
