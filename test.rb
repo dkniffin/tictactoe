@@ -11,12 +11,15 @@ def test(ai,testNum,testName,a)
 	puts b
 end
 
+$wins = 0
+
 def test(in_b,ai,turn,moves=[])
 	b = Marshal.load(Marshal.dump(in_b)) # clone the board
 	# puts b.to_s
 	# First check if opponent has won
 	if b.end?
 		if b.winner == ai.opponent
+			puts "Wins:#{$wins}"
 			puts "Failed board:"
 			puts b
 			puts
@@ -25,8 +28,10 @@ def test(in_b,ai,turn,moves=[])
 			exit
 		elsif b.winner == ai.player
 			# puts "AI wins"
+			$wins += 1
 		elsif b.winner == nil
 			# puts "Tie."
+			$wins += 1
 		end
 	# If it's ai's turn, go
 	elsif turn == ai.player
