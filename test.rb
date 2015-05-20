@@ -55,6 +55,8 @@ def test(in_b,ai,turn,moves=[])
 	end
 end
 
+puts "Running games with ai = O ..."
 test(Board.new(3,3), AI.new('O','X'),'X')
+puts "Running games with ai = X ..."
 test(Board.new(3,3), AI.new('X','O'),'X')
 puts "All tests passed."
