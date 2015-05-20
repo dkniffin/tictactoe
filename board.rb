@@ -51,6 +51,9 @@ class Board
 	def to_s
 		cols.map{|c| c.map{|x,y| (@data[x][y] == nil) ? '_': @data[x][y]}.join(' ')}.join("\n")
 	end
+	def empty?
+		cellCoords.all?{|x,y| @data[x][y].nil?}
+	end
 	def end?
 		# There's a winner or no moves left
 		! winner.nil? || cells.none? {|cell| cell.nil?}

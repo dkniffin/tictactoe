@@ -6,6 +6,10 @@ class AI
 		@opponent = opponent
 	end
 	def move(board)
+		if board.empty?
+			board.move(0,0,@player)
+			return [0,0]
+		end
 		# Take a move on the board
 		@base_score = board.validMoves.count + 1
 		bound = @base_score + 1
