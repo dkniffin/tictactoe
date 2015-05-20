@@ -11,7 +11,7 @@ class AI
 			return [0,0]
 		end
 		# Take a move on the board
-		@base_score = board.validMoves.count + 1
+		@base_score = board.valid_moves.count + 1
 		bound = @base_score + 1
 		minimax(board, 0, @player, -bound, bound)
 
@@ -26,7 +26,7 @@ class AI
 
 		moves_w_scores = []
 
-		board.validMoves.each do |move|
+		board.valid_moves.each do |move|
 			board.move(move[0],move[1],player)
 			next_player = (player == @player)? @opponent : @player
 			score = minimax(board,depth+1,next_player,lower_bound,upper_bound)
@@ -47,38 +47,10 @@ class AI
 		lower_bound
 	end
 	def heuristic(board)
-		# board.sets.each_with_index.map do |set,i|
-		# 	midcenter = [1,4,6,7].include?(i)
-		# 	setHeuristic(set,midcenter)
-		# end.reduce(:+)
-
 		if board.winner == @player
 			10
 		elsif board.winner == @opponent
 			-10
-		else
-			0
-		end
-	end
-	def setHeuristic(set,midcenter=false)
-		# midcenter says whether the middle of this set is the center
-
-
-		myCount = Board.countInRow(set,@player)
-		oppCount = Board.countInRow(set,@opponent)
-
-		if myCount == 3
-			100
-		elsif oppCount == 3
-			-100
-		elsif myCount == 2
-			10
-		elsif oppCount == 2
-			-10
-		elsif myCount == 1
-			1
-		elsif oppCount == 1
-			-1
 		else
 			0
 		end

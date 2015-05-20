@@ -23,24 +23,24 @@ class Board
 		[[[0,0],[1,1],[2,2]],
 		 [[0,2],[1,1],[2,0]]]
 	end
-	def cellCoords
+	def cell_coords
 		rows.reduce(:+)
 	end
 	def cells
-		cellCoords.map{|x,y| @data[x][y]}
+		cell_coords.map{|x,y| @data[x][y]}
 	end
-	def setCoords
+	def set_coords
 		# Return array of winning sets
 		rows + cols + diags
 	end
 	def sets
-		setCoords.map{|set| set.map{|x,y| @data[x][y]}}
+		set_coords.map{|set| set.map{|x,y| @data[x][y]}}
 	end
 	def valid?(x,y)
 		@data[x][y].nil?
 	end
-	def validMoves
-		cellCoords.select{|x,y| valid?(x,y)}
+	def valid_moves
+		cell_coords.select{|x,y| valid?(x,y)}
 	end
 	def move(x,y,player)
 		@data[x][y] = player
@@ -52,7 +52,7 @@ class Board
 		cols.map{|c| c.map{|x,y| (@data[x][y] == nil) ? '_': @data[x][y]}.join(' ')}.join("\n")
 	end
 	def empty?
-		cellCoords.all?{|x,y| @data[x][y].nil?}
+		cell_coords.all?{|x,y| @data[x][y].nil?}
 	end
 	def end?
 		# There's a winner or no moves left
@@ -60,36 +60,36 @@ class Board
 	end
 	def winner
 		# Any sets have all the same, non-nil, elements
-		if sets.any?{|s| Board.countInRow(s,'X') == 3 }
+		if sets.any?{|s| Board.count_in_row(s,'X') == 3 }
 			'X'
-		elsif sets.any?{|s| Board.countInRow(s,'O') == 3 }
+		elsif sets.any?{|s| Board.count_in_row(s,'O') == 3 }
 			'O'
 		else
 			nil
 		end
 	end
 	class << self
-		def countInRow(set,player)
-			bestCount = 1
-			currentCount = 1
+		def count_in_row(set,player)
+			best_count = 1
+			current_count = 1
 			lastE = nil
 			set.each do |e|
 				if e == player
 					if lastE == e
-						currentCount += 1
+						current_count += 1
 					end
-					if currentCount > bestCount
-						bestCount = currentCount
+					if current_count > best_count
+						best_count = current_count
 					end
 					lastE = e
 				end
 			end
-			bestCount
+			best_count
 		end
-		def posCoords
+		def pos_coords
 			[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1],[0,2],[1,2],[2,2]]
 		end
-		def inputGrid
+		def input_grid
 			"1 2 3\n" +
 			"4 5 6\n" +
 			"7 8 9"

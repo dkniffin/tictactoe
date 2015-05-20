@@ -28,7 +28,7 @@ if aiToken == 'X'
 end
 
 puts "Game input grid:"
-puts Board.inputGrid
+puts Board.input_grid
 puts
 puts "Current Board:"
 puts b
@@ -49,10 +49,12 @@ loop do
 	if ! pos.between?(1,9)
 		puts "Invalid input. Input should be a number 1-9."
 		puts "Move grid:"
-		puts Board.positionsString
+		puts Board.input_grid
+		puts "Current Board:"
+		puts b
 		next
 	end
-	x,y = Board.posCoords[pos-1]
+	x,y = Board.pos_coords[pos-1]
 	# x,y = input.split(',').map{|e| e.to_i} # split into x & y
 
 	if b.valid?(x,y)

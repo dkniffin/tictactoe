@@ -37,16 +37,16 @@ def test(in_b,ai,turn,moves=[])
 	# If it's ai's turn, go
 	elsif turn == ai.player
 		move = ai.move(b)
-		pos = Board.posCoords.index(move) + 1
+		pos = Board.pos_coords.index(move) + 1
 		moves.push("#{ai.player}->#{pos}")
 		test(b,ai,ai.opponent,moves)
 	# If it's not, run all possible moves that are left
 	else
-		for x,y in Board.posCoords
+		for x,y in Board.pos_coords
 			moves_copy = Marshal.load(Marshal.dump(moves))
 			if b.valid?(x,y)
 				b.move(x,y,ai.opponent)
-				pos = Board.posCoords.index([x,y]) + 1
+				pos = Board.pos_coords.index([x,y]) + 1
 				moves_copy.push("#{ai.opponent}->#{pos}")
 				test(b,ai,ai.player,moves_copy)
 				b.unmove(x,y)
