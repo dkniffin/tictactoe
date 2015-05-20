@@ -33,6 +33,7 @@ def test(in_b,ai,turn,moves=[])
 			# puts "Tie."
 			$wins += 1
 		end
+		puts "wins: #{$wins}" if $wins % 100 == 0
 	# If it's ai's turn, go
 	elsif turn == ai.player
 		move = ai.move(b)
