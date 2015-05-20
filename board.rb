@@ -30,7 +30,6 @@ class Board
 		cell_coords.map{|x,y| @data[x][y]}
 	end
 	def set_coords
-		# Return array of winning sets
 		rows + cols + diags
 	end
 	def sets
@@ -49,6 +48,7 @@ class Board
 		@data[x][y] = nil
 	end
 	def to_s
+		# Return a pretty string for the board
 		cols.map{|c| c.map{|x,y| (@data[x][y] == nil) ? '_': @data[x][y]}.join(' ')}.join("\n")
 	end
 	def empty?
@@ -60,9 +60,9 @@ class Board
 	end
 	def winner
 		# Any sets have all the same, non-nil, elements
-		if sets.any?{|s| Board.count_in_row(s,'X') == 3 }
+		if sets.any?{|s| Board.count_in_row(s,'X') == s.count }
 			'X'
-		elsif sets.any?{|s| Board.count_in_row(s,'O') == 3 }
+		elsif sets.any?{|s| Board.count_in_row(s,'O') == s.count }
 			'O'
 		else
 			nil

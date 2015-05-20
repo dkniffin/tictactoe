@@ -6,45 +6,71 @@ class AI
 		@opponent = opponent
 	end
 	def move(board)
+		# If the board is empty, it means we're going first. The best move to
+		# take in this case is the top left. By manually doing this, we reduce
+		# computation time.
 		if board.empty?
 			board.move(0,0,@player)
 			return [0,0]
 		end
-		# Take a move on the board
+
+		@best_move = nil
+
+		# Start with best and worst scores of -11 and +11
 		@base_score = board.valid_moves.count + 1
 		bound = @base_score + 1
+
+		# Run minimax
 		minimax(board, 0, @player, -bound, bound)
 
-		move = @current_move_choice
-
-		board.move(move[0],move[1],@player)
-		return move
+		# Take a move on the board, and return it
+		board.move(@best_move[0],@best_move[1],@player)
+		return @best_move
 	end
 
-	def minimax(board, depth, player,lower_bound,upper_bound)
+	def minimax(board, depth, player, best, worst)
+		# If the game is over, return the score of the board
+
+		# TODO: In tic-tac-toe, many times a result can be determined before
+		# the end of the game. Computation time could be decreased if we do
+		# this before the very end
 		return heuristic(board) if board.end?
 
-		moves_w_scores = []
+		move_score_pairs = []
 
+		# For each valid move on the board
 		board.valid_moves.each do |move|
+			# Take the move
 			board.move(move[0],move[1],player)
+
+			# Calculate the score for that move
 			next_player = (player == @player)? @opponent : @player
-			score = minimax(board,depth+1,next_player,lower_bound,upper_bound)
+			score = minimax(board,depth+1,next_player,best,worst)
+
+			# Undo the move
 			board.unmove(move[0],move[1])
-			node = [score,move]
+
+			pair = [score,move]
 
 			if player == @player
-				moves_w_scores.push(node)
-				lower_bound = node[0] if node[0] > lower_bound
+				# Add the score and move to the list of potential moves
+				move_score_pairs.push(pair)
+				# Update best
+				best = pair[0] if pair[0] > best
 			else
-				upper_bound = node[0] if node[0] < upper_bound
+				# Update worst
+				worst = pair[0] if pair[0] < worst
 			end
-			break if upper_bound < lower_bound
+			# We found a winning move; break
+			break if worst < best
 		end
-		return upper_bound unless player == @player
-
-		@current_move_choice = moves_w_scores.max_by{|node|node[0]}[1]
-		lower_bound
+		if player == @opponent
+			worst
+		else
+			# Set the best move, and return the score
+			@best_move = move_score_pairs.max_by{|node|node[0]}[1]
+			best
+		end
 	end
 	def heuristic(board)
 		if board.winner == @player
