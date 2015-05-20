@@ -6,8 +6,17 @@ b = Board.new(3,3) # Create the board
 
 # Welcome text
 puts "Welcome to Tic-Tac-Toe!"
-$stdout.print("X or O? ")
-playerToken = gets.chomp
+playerToken = nil
+continueloop = true
+while(continueloop) do
+	$stdout.print("X or O? ")
+	playerToken = gets.chomp
+	if playerToken != 'X' && playerToken != 'O'
+		puts "Invalid token."
+	else
+		continueloop = false
+	end
+end
 
 # Set up AI
 aiToken = (playerToken == 'X') ? 'O' : 'X'
