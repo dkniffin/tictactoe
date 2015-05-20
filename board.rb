@@ -70,21 +70,7 @@ class Board
 	end
 	class << self
 		def count_in_row(set,player)
-			best_count = 1
-			current_count = 1
-			lastE = nil
-			set.each do |e|
-				if e == player
-					if lastE == e
-						current_count += 1
-					end
-					if current_count > best_count
-						best_count = current_count
-					end
-					lastE = e
-				end
-			end
-			best_count
+			set.select{|e| e == player}.count
 		end
 		def pos_coords
 			[[0,0],[1,0],[2,0],[0,1],[1,1],[2,1],[0,2],[1,2],[2,2]]
